@@ -1,0 +1,90 @@
+= Pgn Replay
+
+PGN Replay is a Radiant extension that will embed some of the code necessary to replay a chess game from PGN (Portable Game Notation)
+
+== Dependencies
+
+	*Has only been tested with Radiant 0.81 May work with 0.7+, probably not with earlier versions.
+	*Requires the ChessTempo javascript PGN Viewer. (See below for instructions on setting your layout up to use it)
+	*Minimal amount of custom javascript to tailor it for your own use.
+
+== Installation
+
+To install this extension, run:
+
+	rake radiant:extensions:pgn_replay:update
+	rake environment radiant:extensions:pgn_replay:migrate
+	
+(replace "environment" above with the environment you're installing it into -- "production", "test" or "development".
+
+== Usage
+
+In order to make use of this, you will first have to set your page layout up to load the Chess Tempo PGN Viewer. To do this, add these lines to the head of your layout:
+
+	<link type="text/css" rel="stylesheet" href="http://chesstempo.com/css/board-min.css" />
+	<script type="text/javascript" src="http://chesstempo.com/js/pgnyui.js"></script>
+	<script type="text/javascript" src="http://chesstempo.com/js/pgnviewer.js"></script>
+
+This will load the basic files needed for the Chesstempo viewer. You will also need to define a javascript function (set_puzzle) that gets called to create the position. This function takes two arguments, the first being the ID of the element to insert the PGN Viewer into, and the second being the javascript variable the pgn text will be placed into.
+
+For example, here is a simple definition of set_puzzle:
+
+	function set_puzzle( section, pgn ) {
+	  new PgnViewer({
+		boardName: section,
+		pgnString: pgn,
+	  });
+	}
+
+while a more elaborate version might be:
+
+	function set_puzzle( section, pgn ) {
+	  new PgnViewer({
+		boardName: section,
+		pgnString: pgn,
+		pauseBetweenMoves: 500,
+		showCoordinates: true,
+		pieceSet: 'PV',
+		pieceSize: 35,
+		boardImagePath: "/images/boards",
+		addVersion: false,
+		newlineForEachMainMove: false,
+		autoScrollMoves: true,
+		showBracketsOnVariation: true,
+		moveAnimationLength: 0.1
+	  });
+	}
+
+For a complete definition of these options and more see http://chesstempo.com/pgn-usage.html (The actual function definition is implementation dependent in order to allow a complete customization of the viewer; of course, had the viewer been written differently, this wouldn't be necessary.)
+
+Then in your page, use:
+
+	<r:pgn />
+
+to randomly select from the PGN games available for the page.
+
+== Why the ChessTempo Viewer?
+
+In a nutshell, because it's currently the best of a bad lot. I've yet to find a javascript PGN player out there I really like, but this one is closest. The way it's written and licensed prevents me from easily using it for a base or customizing it for this extension, but until I write a better one (project is underway, and will hopefully be finished by the time this extension reaches 1.0 status) I'm including it here.
+
+None of the commercial chess database companies has a PGN Viewer that appears to be written by someone who understands either HTML/CSS or Javascript as they are used in web development today, and other systems require preprocessing the PGN file before embedding it on the page. (That in itself is not horrible, and in fact I'm considering adding the DGT flash-based veiwer to this as an option in a future version.) This one at least allows some control over what's happening with the board and pieces, and allows you to replace the pieces and colors with ones that will fit with your site.
+
+== Revision History
+
+	*0.2 -- Basic functionality complete
+
+== To Do
+
+Since we're early in the development of this extension, this is a long list, given in no particular order. Feel free to contact me with more.
+
+	*Eliminate the need for set_puzzle
+	*Eliminate the need to add other files into your layout
+	*Add the capability of placing more than one PGN on a page
+	*Find/Create a better PGN viewer that can be integrated into this
+	*Add ability to select between different viewers (e.g., one for games, one for puzzles)
+	*Add ability to randomly select by specific tag
+	*Add ability to select specific game by title or id
+	*Add ability to select a group of games/positions for display
+
+Feel free to chime in with other ideas.
+	

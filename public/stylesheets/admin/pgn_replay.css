@@ -1,0 +1,14 @@
+table#pgn_listing {width: 95%; margin: 1em auto; }
+table#pgn_listing thead { font-weight: bold; background-color: #F7F7F7; }
+table#pgn_listing thead td { padding: 5px 0; }
+table#pgn_listing td.short { width: 5%; }
+table#pgn_listing td.long { width: 30%; }
+
+#pgn_replay_title { display: block; margin-bottom: 1em; width: 100%; }
+#pgn_replay_pgn_text { display: block; margin-bottom: 1em; width: 100%; }
+#pgn_replay_tags {display: block; margin-bottom: 1em; width: 100%; }
+
+#new_pgn_replay .button, #content .edit_pgn_replay .button {font-size: 80%; font-style: italic; }
+#new_pgn_replay label {font-size: 80%; font-style: italic; }
+
+#pgn_replay_form { border: none; background-color: #F5F1E2; padding: 1em; margin-bottom: 1em;}

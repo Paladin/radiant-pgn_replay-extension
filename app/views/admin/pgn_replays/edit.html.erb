@@ -1,0 +1,4 @@
+<% include_stylesheet "admin/pgn_replay.css" %>
+<% form_for [:admin, @pgn_replay] do |f| %>
+  <%= render :partial => "form", :locals => {:f => f} %>
+<% end %>

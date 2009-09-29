@@ -1,0 +1,26 @@
+<% include_stylesheet "admin/pgn_replay.css" %>
+<h1>PGN Files</h1>
+<p><%= link_to 'New Game', new_admin_pgn_replay_url, :title => "Add a new game/position", :class => 'new-link' %></p>
+<table id="pgn_listing">
+  <thead>
+    <tr>
+      <td class="short">ID</td>
+      <td class="long">Summary</td>
+      <td class="long">Tags</td>
+      <td class="short">Puzzle?</td>
+      <td class="long">&nbsp;</td>
+    </tr>
+  </thead>
+  <tbody>
+<% @games.each do |game| %>
+    <tr>
+      <td><%= game.id %></td>
+      <td><%= game.reference %></td>
+      <td><%= game.tags %></td>
+      <td><%= game.puzzle? %></td>
+      <td><%= link_to 'Edit Game', edit_admin_pgn_replay_url(game) %> | <%= link_to 'Remove Game', remove_admin_pgn_replay_url(game) %>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+<p><%= link_to 'New Game', new_admin_pgn_replay_url, :title => "Add a new game/position", :class => 'new-link' %></p>

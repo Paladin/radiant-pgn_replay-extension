@@ -1,0 +1,12 @@
+<fieldset id="pgn_replay_form">
+<%= f.label :title, "Title" %>
+<%= f.text_field :title %>
+<%= f.label :pgn_text, "PGN Text" %>
+<%= f.text_area :pgn_text %>
+<%= f.label :tags, "Tags" %>
+<%= f.text_field :tags %>
+</fieldset>
+<%= save_model_button(@pgn_replay) %>
+<%= save_model_and_continue_editing_button(@pgn_replay) %>
+or
+<%= link_to 'Cancel', admin_pgn_replays_url %>
