@@ -6,7 +6,6 @@ PGN Replay is a Radiant extension that will embed some of the code necessary to 
 
 	*Has only been tested with Radiant 0.81 May work with 0.7+, probably not with earlier versions.
 	*Requires the ChessTempo javascript PGN Viewer. (See below for instructions on setting your layout up to use it)
-	*Minimal amount of custom javascript to tailor it for your own use.
 
 == Installation
 
@@ -25,43 +24,25 @@ In order to make use of this, you will first have to set your page layout up to 
 	<script type="text/javascript" src="http://chesstempo.com/js/pgnyui.js"></script>
 	<script type="text/javascript" src="http://chesstempo.com/js/pgnviewer.js"></script>
 
-This will load the basic files needed for the Chesstempo viewer. You will also need to define a javascript function (set_puzzle) that gets called to create the position. This function takes two arguments, the first being the ID of the element to insert the PGN Viewer into, and the second being the javascript variable the pgn text will be placed into.
-
-For example, here is a simple definition of set_puzzle:
-
-	function set_puzzle( section, pgn ) {
-	  new PgnViewer({
-		boardName: section,
-		pgnString: pgn,
-	  });
-	}
-
-while a more elaborate version might be:
-
-	function set_puzzle( section, pgn ) {
-	  new PgnViewer({
-		boardName: section,
-		pgnString: pgn,
-		pauseBetweenMoves: 500,
-		showCoordinates: true,
-		pieceSet: 'PV',
-		pieceSize: 35,
-		boardImagePath: "/images/boards",
-		addVersion: false,
-		newlineForEachMainMove: false,
-		autoScrollMoves: true,
-		showBracketsOnVariation: true,
-		moveAnimationLength: 0.1
-	  });
-	}
-
-For a complete definition of these options and more see http://chesstempo.com/pgn-usage.html (The actual function definition is implementation dependent in order to allow a complete customization of the viewer; of course, had the viewer been written differently, this wouldn't be necessary.)
+This will load the basic files needed for the Chesstempo viewer.
 
 Then in your page, use:
 
-	<r:pgn />
+	<r:pgn [option="value" ...] />
 
-to randomly select from the PGN games available for the page.
+to randomly select from the PGN games available for the page. For a complete definition of the options and their default values see http://chesstempo.com/pgn-usage.html
+
+For example:
+
+	<r:pgn boardName="myPosition" />
+
+will insert the PGN viewer into the element that has the id of "myPosition" and 
+
+   <r:pgn boardName="myPosition" pieceSize="35" />
+
+will insert the PGN viewer into that same element, but will also set the piece size to 35px.
+
+If you do not supply an element id to "boardName" the extension will default to "positionA" for the boardName. By giving different boardName values to multiple uses of this tag, you can insert multiple instances of the pgn viewer into your page.
 
 == Why the ChessTempo Viewer?
 
@@ -72,14 +53,13 @@ None of the commercial chess database companies has a PGN Viewer that appears to
 == Revision History
 
 	*0.2 -- Basic functionality complete
+	*0.3 -- Cleaned up javascript and added new options
 
 == To Do
 
 Since we're early in the development of this extension, this is a long list, given in no particular order. Feel free to contact me with more.
 
-	*Eliminate the need for set_puzzle
 	*Eliminate the need to add other files into your layout
-	*Add the capability of placing more than one PGN on a page
 	*Find/Create a better PGN viewer that can be integrated into this
 	*Add ability to select between different viewers (e.g., one for games, one for puzzles)
 	*Add ability to randomly select by specific tag

@@ -2,6 +2,11 @@ class PgnReplay < ActiveRecord::Base
   validates_presence_of :pgn_text, :message => 'required'
   validates_presence_of :title, :message => 'required'
   
+  def self.random(  )
+	ids = find( :all, :select => 'id' )
+  	find(ids[rand(ids.length)]["id"].to_i) unless ids.blank?
+  end
+
   def puzzle?
     if(pgn_text.grep( "/\[ ?FEN ?\"/m"))
       puzzle = true
