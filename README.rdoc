@@ -18,7 +18,7 @@ To install this extension, run:
 
 == Usage
 
-In order to make use of this, you will first have to set your page layout up to load the Chess Tempo PGN Viewer. To do this, add these lines to the head of your layout:
+In order to make use of this, you will first have to edit your page layout to load the Chess Tempo PGN Viewer. To do this, add these lines to the head of your layout:
 
 	<link type="text/css" rel="stylesheet" href="http://chesstempo.com/css/board-min.css" />
 	<script type="text/javascript" src="http://chesstempo.com/js/pgnyui.js"></script>
@@ -30,7 +30,7 @@ Then in your page, use:
 
 	<r:pgn [option="value" ...] />
 
-to randomly select from the PGN games available for the page. For a complete definition of the options and their default values see http://chesstempo.com/pgn-usage.html
+to randomly select from the PGN puzzles available for the page ("puzzle" value set to true). For a complete definition of the options and their default values see http://chesstempo.com/pgn-usage.html
 
 For example:
 
@@ -44,6 +44,16 @@ will insert the PGN viewer into that same element, but will also set the piece s
 
 If you do not supply an element id to "boardName" the extension will default to "positionA" for the boardName. By giving different boardName values to multiple uses of this tag, you can insert multiple instances of the pgn viewer into your page.
 
+In addition, there are two options available if you want load a specific game into the viewer, rather than a random one:
+
+	<r:pgn game="id" [....] />
+
+will load the game (or puzzle) identified by id number "id" and
+
+	<r:pgn tag="tagValue" [...] />
+
+will load the game (or puzzle) identified by the tag "tagValue".
+
 == Why the ChessTempo Viewer?
 
 In a nutshell, because it's currently the best of a bad lot. I've yet to find a javascript PGN player out there I really like, but this one is closest. The way it's written and licensed prevents me from easily using it for a base or customizing it for this extension, but until I write a better one (project is underway, and will hopefully be finished by the time this extension reaches 1.0 status) I'm including it here.
@@ -54,6 +64,7 @@ None of the commercial chess database companies has a PGN Viewer that appears to
 
 	*0.2 -- Basic functionality complete
 	*0.3 -- Cleaned up javascript and added new options
+	*0.4 -- Added ability to pull by tag and by Game id
 
 == To Do
 
@@ -62,8 +73,6 @@ Since we're early in the development of this extension, this is a long list, giv
 	*Eliminate the need to add other files into your layout
 	*Find/Create a better PGN viewer that can be integrated into this
 	*Add ability to select between different viewers (e.g., one for games, one for puzzles)
-	*Add ability to randomly select by specific tag
-	*Add ability to select specific game by title or id
 	*Add ability to select a group of games/positions for display
 
 Feel free to chime in with other ideas.

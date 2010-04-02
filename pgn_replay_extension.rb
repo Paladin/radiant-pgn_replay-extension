@@ -2,7 +2,7 @@
 # require_dependency 'application_controller'
 
 class PgnReplayExtension < Radiant::Extension
-  version "0.2"
+  version "0.4"
   description "Provides a PGN game or puzzle file to the page"
   url "http://www.paladinweb.net/radiant/pgn_replay"
   

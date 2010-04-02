@@ -9,13 +9,24 @@ module PgnReplay::Tags
     <pre><code><r:pgn [attribute="value" ... ] /></code></pre>
   }
   tag "pgn" do |tag|
-    game = PgnReplay.random()
-    game.pgn_text.gsub!(/[']/, '\\\\\'')
+    unless tag.attr["game"].blank?
+	  game = PgnReplay.find(tag.attr["game"])
+	else
+	  unless tag.attr["tag"].blank?
+	    game = PgnReplay.find_by_tag(tag.attr["tag"])
+	  else
+	    game = PgnReplay.random()
+	  end
+	end
+#    game = PgnReplay.random() if tag.attr["game"].blank? && tag.attr["tag"].blank?
+#	game = PgnReplay.find(tag.attr["game"]) unless tag.attr["game"].blank?
+#	game = PgnReplay.find_by_tag(tag.attr["tag"]) unless tag.attr["tag"].blank?
+    pgn_string = game.pgn_text.gsub(/[']/, '\\\\\'')
     tag.attr["boardName"] = "positionA" if tag.attr["boardName"].blank?
-    result = '<section id="position" class="the_position">'
+    result = "<section id=\"#{tag.attr['boardName']}\" class=\"the_position\">"
     result << "<h1>#{game.title}</h1>"
     result << "<div id=\"#{tag.attr['boardName']}-container\" class=\"the_board\"></div>"
-    result << '<a class="caption" href="#">Show Solution</a>'
+    result << '<a class="caption" href="#">Show Solution</a>' if tag.attr["game"].blank? && tag.attr["tag"].blank?
     result << '<a href="http://chesstempo.com/pgn-viewer.html" style="display: block;font-size:70%;text-align:center;">About the ChessTempo viewer</a>'
     result << "<div id=\"#{tag.attr['boardName']}-moves\" class=\"the_moves\"></div>"
     result << '</section>'
@@ -28,7 +39,7 @@ module PgnReplay::Tags
         else "'#{value}',\n"
       end
     end
-    result << "pgnString: '#{game.pgn_text}' });\n"
+    result << "pgnString: '#{pgn_string}' });\n"
     result << '</script>'
   end
 
